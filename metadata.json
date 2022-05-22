@@ -1,0 +1,16 @@
+{
+  "name": "halyard-grafana",
+  "version": "0.0.1",
+  "author": "Les Aker",
+  "license": "MIT",
+  "summary": "Configure grafana instance",
+  "source": "https://github.com/halyard/puppet-grafana",
+  "project_page": "https://github.com/halyard/puppet-grafana",
+  "issues_url": "https://github.com/halyard/puppet-grafana/issues",
+  "dependencies": [
+
+  ],
+  "operatingsystem_support": [
+
+  ]
+}
