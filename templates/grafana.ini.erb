@@ -3,8 +3,8 @@ http_addr = 0.0.0.0
 protocol = https
 cert_file = /mnt/certs/cert
 cert_key = /mnt/certs/key
-domain = <%= @hostname %>
-root_url = https://<%= @hostname %>/
+domain = <%= @root_domain ? @root_domain : @hostname %>
+root_url = <%= @root_url ? @root_url : "https://#{@hostname}/" %>
 [security]
 admin_user = <%= @admin_user %>
 admin_password = <%= @admin_password %>

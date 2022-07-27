@@ -9,6 +9,8 @@
 # @param client_id sets the Github OAuth client ID
 # @param client_secret sets the Github OAuth client secret
 # @param tls_challengealias sets the alias for TLS cert
+# @param root_domain sets the publicly visible root domain for the site
+# @param root_url sets the publicly visible root URL for the site
 class grafana (
   String $hostname,
   String $datadir,
@@ -19,6 +21,8 @@ class grafana (
   String $client_id,
   String $client_secret,
   Optional[String] $tls_challengealias = undef,
+  Optional[String] $root_domain = undef,
+  Optional[String] $root_url = undef,
 ) {
   file { ["${datadir}/data", "${datadir}/provisioning", "${datadir}/certs"]:
     ensure => directory,
