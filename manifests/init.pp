@@ -24,7 +24,7 @@ class grafana (
   Optional[String] $tls_challengealias = undef,
   Optional[String] $root_domain = undef,
   Optional[String] $root_url = undef,
-  String $container_ip = '172.16.0.2',
+  String $container_ip = '172.17.0.2',
 ) {
   file { ["${datadir}/data", "${datadir}/provisioning", "${datadir}/certs"]:
     ensure => directory,
