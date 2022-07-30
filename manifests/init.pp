@@ -48,8 +48,7 @@ class grafana (
     jump    => 'DNAT',
     proto   => 'tcp',
     dport   => 443,
-    todest  => $container_ip,
-    toports => 3000,
+    todest  => "${container_ip}:3000",
     table   => 'nat',
   }
 
