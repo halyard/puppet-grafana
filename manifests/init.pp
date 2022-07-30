@@ -11,6 +11,7 @@
 # @param tls_challengealias sets the alias for TLS cert
 # @param root_domain sets the publicly visible root domain for the site
 # @param root_url sets the publicly visible root URL for the site
+# @param container_ip sets the address of the Docker container
 class grafana (
   String $hostname,
   String $datadir,
@@ -23,6 +24,7 @@ class grafana (
   Optional[String] $tls_challengealias = undef,
   Optional[String] $root_domain = undef,
   Optional[String] $root_url = undef,
+  String $container_ip = '172.16.0.2',
 ) {
   file { ["${datadir}/data", "${datadir}/provisioning", "${datadir}/certs"]:
     ensure => directory,
@@ -41,10 +43,20 @@ class grafana (
     challengealias => $tls_challengealias,
   }
 
+  -> firewall { '100 snat for network foo2':
+    chain   => 'POSTROUTING',
+    jump    => 'DNAT',
+    proto   => 'tcp',
+    dport   => 443,
+    todest  => $container_ip,
+    toports => 3000,
+    table   => 'nat',
+  }
+
   -> docker::container { 'grafana':
     image => 'grafana/grafana-oss:latest',
     args  => [
-      '-p 443:3000',
+      "--ip ${container_ip}"
       "-v ${datadir}/data:/var/lib/grafana",
       "-v ${datadir}/provisioning:/etc/grafana/provisioning",
       "-v ${datadir}/grafana.ini:/etc/grafana/grafana.ini",
