@@ -44,7 +44,7 @@ class grafana (
   }
 
   -> firewall { '100 snat for network foo2':
-    chain  => 'POSTROUTING',
+    chain  => 'PREROUTING',
     jump   => 'DNAT',
     proto  => 'tcp',
     dport  => 443,
