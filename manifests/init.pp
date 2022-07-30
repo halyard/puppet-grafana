@@ -43,7 +43,7 @@ class grafana (
     challengealias => $tls_challengealias,
   }
 
-  -> firewall { '100 snat for network foo2':
+  -> firewall { '100 dnat for grafana ui':
     chain  => 'PREROUTING',
     jump   => 'DNAT',
     proto  => 'tcp',
