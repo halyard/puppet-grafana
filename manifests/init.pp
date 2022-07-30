@@ -44,12 +44,12 @@ class grafana (
   }
 
   -> firewall { '100 snat for network foo2':
-    chain   => 'POSTROUTING',
-    jump    => 'DNAT',
-    proto   => 'tcp',
-    dport   => 443,
-    todest  => "${container_ip}:3000",
-    table   => 'nat',
+    chain  => 'POSTROUTING',
+    jump   => 'DNAT',
+    proto  => 'tcp',
+    dport  => 443,
+    todest => "${container_ip}:3000",
+    table  => 'nat',
   }
 
   -> docker::container { 'grafana':
