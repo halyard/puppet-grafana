@@ -44,7 +44,7 @@ class grafana (
   }
 
   -> firewall { '100 dnat for grafana ui':
-    chain  => 'PREROUTING',
+    chain  => 'DOCKER_EXPOSE',
     jump   => 'DNAT',
     proto  => 'tcp',
     dport  => 443,
