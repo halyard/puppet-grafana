@@ -23,3 +23,9 @@ scopes = user:email,read:org
 auth_url = https://github.com/login/oauth/authorize
 token_url = https://github.com/login/oauth/access_token
 api_url = https://api.github.com/user
+<% if @allowed_organizations -%>
+allowed_organizations = <%= @allowed_organizations.join(' ') %>
+<% end -%>
+<% if @team_ids -%>
+team_ids = <%= @team_ids.join(',') %>
+<% end -%>

@@ -12,6 +12,8 @@
 # @param root_domain sets the publicly visible root domain for the site
 # @param root_url sets the publicly visible root URL for the site
 # @param container_ip sets the address of the Docker container
+# @param allowed_organizations sets the organization requirements for Github auth
+# @param team_ids sets the team requirements for Github auth
 class grafana (
   String $hostname,
   String $datadir,
@@ -25,6 +27,8 @@ class grafana (
   Optional[String] $root_domain = undef,
   Optional[String] $root_url = undef,
   String $container_ip = '172.17.0.2',
+  Array[String] $allowed_organizations = [],
+  Array[String] $team_ids = [],
 ) {
   file { ["${datadir}/data", "${datadir}/provisioning", "${datadir}/certs"]:
     ensure => directory,
