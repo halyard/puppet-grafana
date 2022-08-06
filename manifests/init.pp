@@ -37,6 +37,7 @@ class grafana (
   -> file { "${datadir}/grafana.ini":
     ensure  => file,
     content => template('grafana/grafana.ini.erb'),
+    notify  => Service['container@grafana'],
   }
 
   -> acme::certificate { $hostname:
