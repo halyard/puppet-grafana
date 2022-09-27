@@ -14,6 +14,7 @@
 # @param container_ip sets the address of the Docker container
 # @param allowed_organizations sets the organization requirements for Github auth
 # @param team_ids sets the team requirements for Github auth
+# @param plugins sets the plugins to install
 class grafana (
   String $hostname,
   String $datadir,
@@ -29,6 +30,7 @@ class grafana (
   String $container_ip = '172.17.0.2',
   Array[String] $allowed_organizations = [],
   Array[String] $team_ids = [],
+  Array[String] $plugins = [],
 ) {
   file { ["${datadir}/data", "${datadir}/provisioning", "${datadir}/certs"]:
     ensure => directory,
@@ -65,6 +67,7 @@ class grafana (
       "-v ${datadir}/provisioning:/etc/grafana/provisioning",
       "-v ${datadir}/grafana.ini:/etc/grafana/grafana.ini",
       "-v ${datadir}/certs:/mnt/certs",
+      "-e GF_INSTALL_PLUGINS=${plugins.join(',')}",
     ],
     cmd   => '',
   }
