@@ -15,6 +15,7 @@
 # @param allowed_organizations sets the organization requirements for Github auth
 # @param team_ids sets the team requirements for Github auth
 # @param plugins sets the plugins to install
+# @param extra_config sets extra grafana config flags to use
 class grafana (
   String $hostname,
   String $datadir,
@@ -31,6 +32,7 @@ class grafana (
   Array[String] $allowed_organizations = [],
   Array[String] $team_ids = [],
   Array[String] $plugins = [],
+  Array[String] $extra_config = [],
 ) {
   file { ["${datadir}/data", "${datadir}/provisioning", "${datadir}/certs"]:
     ensure => directory,
@@ -68,6 +70,7 @@ class grafana (
       "-v ${datadir}/grafana.ini:/etc/grafana/grafana.ini",
       "-v ${datadir}/certs:/mnt/certs",
       "-e GF_INSTALL_PLUGINS=${plugins.join(',')}",
+      *$extra_config,
     ],
     cmd   => '',
   }
