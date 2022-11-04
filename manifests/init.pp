@@ -16,6 +16,11 @@
 # @param team_ids sets the team requirements for Github auth
 # @param plugins sets the plugins to install
 # @param extra_config sets extra grafana config flags to use
+# @param backup_target sets the target repo for backups
+# @param backup_watchdog sets the watchdog URL to confirm backups are working
+# @param backup_password sets the encryption key for backup snapshots
+# @param backup_environment sets the env vars to use for backups
+# @param backup_rclone sets the config for an rclone backend
 class grafana (
   String $hostname,
   String $datadir,
@@ -33,8 +38,13 @@ class grafana (
   Array[String] $team_ids = [],
   Array[String] $plugins = [],
   Array[String] $extra_config = [],
+  Optional[String] $backup_target = undef,
+  Optional[String] $backup_watchdog = undef,
+  Optional[String] $backup_password = undef,
+  Optional[Hash[String, String]] $backup_environment = undef,
+  Optional[String] $backup_rclone = undef,
 ) {
-  file { ["${datadir}/data", "${datadir}/provisioning", "${datadir}/certs"]:
+  file { [$datadir, "${datadir}/data", "${datadir}/provisioning", "${datadir}/certs"]:
     ensure => directory,
   }
 
@@ -73,5 +83,23 @@ class grafana (
       *$extra_config,
     ],
     cmd   => '',
+  }
+
+  if $backup_target != '' {
+    backup::repo { 'grafana':
+      source       => "${datadir}/data",
+      target       => $backup_target,
+      watchdog_url => $backup_watchdog,
+      password     => $backup_password,
+      environment  => $backup_environment,
+    }
+
+    backup::repo { 'grafana-provisioning':
+      source       => "${datadir}/provisioning",
+      target       => $backup_target,
+      watchdog_url => $backup_watchdog,
+      password     => $backup_password,
+      environment  => $backup_environment,
+    }
   }
 }
