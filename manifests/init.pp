@@ -87,19 +87,21 @@ class grafana (
 
   if $backup_target != '' {
     backup::repo { 'grafana':
-      source       => "${datadir}/data",
-      target       => $backup_target,
-      watchdog_url => $backup_watchdog,
-      password     => $backup_password,
-      environment  => $backup_environment,
+      source        => "${datadir}/data",
+      target        => $backup_target,
+      watchdog_url  => $backup_watchdog,
+      password      => $backup_password,
+      environment   => $backup_environment,
+      rclone_config => $backup_rclone,
     }
 
     backup::repo { 'grafana-provisioning':
-      source       => "${datadir}/provisioning",
-      target       => $backup_target,
-      watchdog_url => $backup_watchdog,
-      password     => $backup_password,
-      environment  => $backup_environment,
+      source        => "${datadir}/provisioning",
+      target        => $backup_target,
+      watchdog_url  => $backup_watchdog,
+      password      => $backup_password,
+      environment   => $backup_environment,
+      rclone_config => $backup_rclone,
     }
   }
 }
