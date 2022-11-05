@@ -74,6 +74,7 @@ class grafana (
   -> docker::container { 'grafana':
     image => 'grafana/grafana-oss:latest',
     args  => [
+      '--user root',
       "--ip ${container_ip}",
       "-v ${datadir}/data:/var/lib/grafana",
       "-v ${datadir}/provisioning:/etc/grafana/provisioning",
