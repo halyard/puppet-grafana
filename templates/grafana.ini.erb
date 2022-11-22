@@ -16,6 +16,9 @@ allow_sign_up = false
 allow_org_create = false
 [auth]
 oauth_skip_org_role_update_sync = true
+login_maximum_inactive_lifetime_duration = 12M
+login_maximum_lifetime_duration = 12M
+token_rotation_interval_minutes = 1000
 [auth.github]
 enabled = true
 allow_sign_up = true
