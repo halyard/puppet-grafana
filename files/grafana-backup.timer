@@ -1,0 +1,9 @@
+[Unit]
+Description=Schedule backups for grafana postgres
+
+[Timer]
+OnBootSec=600
+OnUnitActiveSec=36000
+
+[Install]
+WantedBy=multi-user.target
