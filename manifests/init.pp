@@ -60,6 +60,7 @@ class grafana (
       "${datadir}/provisioning",
       "${datadir}/certs",
       "${datadir}/backup",
+      "${datadir}/postgres",
     ]:
       ensure => directory,
   }
