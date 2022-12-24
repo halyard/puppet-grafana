@@ -5,6 +5,12 @@ cert_file = /mnt/certs/cert
 cert_key = /mnt/certs/key
 domain = <%= @root_domain ? @root_domain : @hostname %>
 root_url = <%= @root_url ? @root_url : "https://#{@hostname}/" %>
+[database]
+type = postgres
+host = <%= @postgres_ip %>:5432
+user = grafana
+password = <%= @database_password %>
+ssl_mode = require
 [security]
 admin_user = <%= @admin_user %>
 admin_password = <%= @admin_password %>
