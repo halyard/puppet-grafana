@@ -5,6 +5,7 @@ cert_file = /mnt/certs/cert
 cert_key = /mnt/certs/key
 domain = <%= @root_domain ? @root_domain : @hostname %>
 root_url = <%= @root_url ? @root_url : "https://#{@hostname}/" %>
+
 [date_formats]
 full_date = YYYY-MM-DD HH:mm:ss
 interval_second = HH:mm:ss
@@ -13,26 +14,31 @@ interval_hour = HH:mm
 interval_day = MMM DD
 interval_month = YYYY-MM
 interval_year = YYYY
+
 [database]
 type = postgres
 host = <%= @postgres_ip %>:5432
 user = grafana
 password = <%= @database_password %>
 ssl_mode = require
+
 [security]
 admin_user = <%= @admin_user %>
 admin_password = <%= @admin_password %>
 secret_key = <%= @secret_key %>
 cookie_secure = true
 x_xss_protection = true
+
 [users]
 allow_sign_up = false
 allow_org_create = false
+
 [auth]
 oauth_skip_org_role_update_sync = true
 login_maximum_inactive_lifetime_duration = 12M
 login_maximum_lifetime_duration = 12M
 token_rotation_interval_minutes = 1000
+
 [auth.github]
 enabled = true
 allow_sign_up = true
@@ -48,3 +54,10 @@ allowed_organizations = <%= @allowed_organizations.join(' ') %>
 <% unless @team_ids.empty? -%>
 team_ids = <%= @team_ids.join(',') %>
 <% end -%>
+<% if @allow_anonymous -%>
+
+[auth.anonymous]
+enabled = true
+org_name = <%= @anonymous_org %>
+org_role = <%= @anonymous_role %>
+<% end %>

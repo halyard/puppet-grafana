@@ -14,6 +14,9 @@
 # @param root_url sets the publicly visible root URL for the site
 # @param container_ip sets the address of the Docker container
 # @param postgres_ip sets the address of the postgres Docker container
+# @param allow_anonymous determines whether unauthenticated users can view data
+# @param anonymous_org sets the org for anonymous users
+# @param anonymous_role sets the role for anonymous users
 # @param allowed_organizations sets the organization requirements for Github auth
 # @param team_ids sets the team requirements for Github auth
 # @param plugins sets the plugins to install
@@ -41,6 +44,9 @@ class grafana (
   Optional[String] $root_url = undef,
   String $container_ip = '172.17.0.2',
   String $postgres_ip = '172.17.0.3',
+  Boolean $allow_anonymous = false,
+  String $anonymous_org = 'Main',
+  String $anonymous_role = 'Viewer',
   Array[String] $allowed_organizations = [],
   Array[String] $team_ids = [],
   Array[String] $plugins = [],
