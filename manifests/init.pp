@@ -17,6 +17,7 @@
 # @param allow_anonymous determines whether unauthenticated users can view data
 # @param anonymous_org sets the org for anonymous users
 # @param anonymous_role sets the role for anonymous users
+# @param viewers_can_edit controls whether viewers can use Explore and modify dashboard panels
 # @param allowed_organizations sets the organization requirements for Github auth
 # @param team_ids sets the team requirements for Github auth
 # @param plugins sets the plugins to install
@@ -47,6 +48,7 @@ class grafana (
   Boolean $allow_anonymous = false,
   String $anonymous_org = 'Main',
   String $anonymous_role = 'Viewer',
+  Boolean $viewers_can_edit = false,
   Array[String] $allowed_organizations = [],
   Array[String] $team_ids = [],
   Array[String] $plugins = [],
