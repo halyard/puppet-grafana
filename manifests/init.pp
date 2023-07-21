@@ -64,7 +64,6 @@ class grafana (
   Optional[String] $backup_rclone = undef,
   Optional[String] $postgres_watchdog = undef,
 ) {
-
   $hook_script =  "#!/usr/bin/env bash
 cp \$LEGO_CERT_PATH ${datadir}/certs/cert
 cp \$LEGO_CERT_KEY_PATH ${datadir}/certs/key
