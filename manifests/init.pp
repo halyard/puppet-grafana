@@ -2,14 +2,15 @@
 #
 # @param hostname sets the hostname for grafana
 # @param datadir sets where the data is persisted
-# @param tls_account sets the TLS account config
 # @param admin_user sets the username for the primary Grafana account
 # @param admin_password sets the password for the primary Grafana account
 # @param secret_key sets the AES key used for encrypting Grafana sessions
 # @param client_id sets the Github OAuth client ID
 # @param client_secret sets the Github OAuth client secret
 # @param database_password sets the postgres password for grafana
-# @param tls_challengealias sets the alias for TLS cert
+# @param aws_access_key_id sets the AWS key to use for Route53 challenge
+# @param aws_secret_access_key sets the AWS secret key to use for the Route53 challenge
+# @param email sets the contact address for the certificate
 # @param root_domain sets the publicly visible root domain for the site
 # @param root_url sets the publicly visible root URL for the site
 # @param container_ip sets the address of the Docker container
@@ -33,14 +34,15 @@
 class grafana (
   String $hostname,
   String $datadir,
-  String $tls_account,
   String $admin_user,
   String $admin_password,
   String $secret_key,
   String $client_id,
   String $client_secret,
   String $database_password,
-  Optional[String] $tls_challengealias = undef,
+  String $aws_access_key_id,
+  String $aws_secret_access_key,
+  String $email,
   Optional[String] $root_domain = undef,
   Optional[String] $root_url = undef,
   String $container_ip = '172.17.0.2',
@@ -62,6 +64,12 @@ class grafana (
   Optional[String] $backup_rclone = undef,
   Optional[String] $postgres_watchdog = undef,
 ) {
+
+  $hook_script =  "#!/usr/bin/env bash
+cp \$LEGO_CERT_PATH ${datadir}/certs/cert
+cp \$LEGO_CERT_KEY_PATH ${datadir}/certs/key
+/usr/bin/systemctl restart container@grafana"
+
   file { [
       $datadir,
       "${datadir}/data",
@@ -80,11 +88,10 @@ class grafana (
   }
 
   -> acme::certificate { $hostname:
-    reloadcmd      => '/usr/bin/systemctl restart container@grafana',
-    keypath        => "${datadir}/certs/key",
-    fullchainpath  => "${datadir}/certs/cert",
-    account        => $tls_account,
-    challengealias => $tls_challengealias,
+    hook_script           => $hook_script,
+    aws_access_key_id     => $aws_access_key_id,
+    aws_secret_access_key => $aws_secret_access_key,
+    email                 => $email,
   }
 
   -> firewall { '100 dnat for grafana ui':
