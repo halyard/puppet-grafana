@@ -179,7 +179,7 @@ cp \$LEGO_CERT_KEY_PATH ${datadir}/certs/key
   if $backup_target != '' {
     backup::repo { 'grafana':
       source        => "${datadir}/data",
-      target        => $backup_target,
+      target        => "${backup_target}/data",
       watchdog_url  => $backup_data_watchdog,
       password      => $backup_password,
       environment   => $backup_environment,
@@ -188,7 +188,7 @@ cp \$LEGO_CERT_KEY_PATH ${datadir}/certs/key
 
     backup::repo { 'grafana-provisioning':
       source        => "${datadir}/provisioning",
-      target        => $backup_target,
+      target        => "${backup_target}/provisioning",
       watchdog_url  => $backup_provisioning_watchdog,
       password      => $backup_password,
       environment   => $backup_environment,
@@ -197,7 +197,7 @@ cp \$LEGO_CERT_KEY_PATH ${datadir}/certs/key
 
     backup::repo { 'grafana-database':
       source        => "${datadir}/backup",
-      target        => $backup_target,
+      target        => "${backup_target}/database",
       watchdog_url  => $backup_database_watchdog,
       password      => $backup_password,
       environment   => $backup_environment,
