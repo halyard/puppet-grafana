@@ -21,6 +21,7 @@
 # @param viewers_can_edit controls whether viewers can use Explore and modify dashboard panels
 # @param allowed_organizations sets the organization requirements for Github auth
 # @param team_ids sets the team requirements for Github auth
+# @param role_attribute_path sets how roles are mapped from Github metadata
 # @param plugins sets the plugins to install
 # @param extra_config sets extra grafana config flags to use
 # @param backup_target sets the target repo for backups
@@ -53,6 +54,7 @@ class grafana (
   Boolean $viewers_can_edit = false,
   Array[String] $allowed_organizations = [],
   Array[String] $team_ids = [],
+  Optional[String] $role_attribute_path = undef,
   Array[String] $plugins = [],
   Array[String] $extra_config = [],
   Optional[String] $backup_target = undef,
