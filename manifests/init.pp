@@ -129,7 +129,7 @@ cp \$LEGO_CERT_KEY_PATH ${datadir}/certs/key
   }
 
   docker::container { 'postgres':
-    image   => 'postgres:14',
+    image   => 'postgres:17',
     args    => [
       "--ip ${postgres_ip}",
       "-v ${datadir}/postgres:/var/lib/postgresql/data",
