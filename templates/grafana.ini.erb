@@ -34,6 +34,9 @@ allow_sign_up = false
 allow_org_create = false
 viewers_can_edit = <%= @viewers_can_edit %>
 
+[feature_toggles]
+enable = externalServiceAccounts
+
 [auth]
 oauth_skip_org_role_update_sync = true
 login_maximum_inactive_lifetime_duration = 12M
