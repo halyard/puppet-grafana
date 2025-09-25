@@ -105,7 +105,7 @@ cp \$LEGO_CERT_KEY_PATH ${datadir}/certs/key
   }
 
   -> docker::container { 'grafana':
-    image => 'grafana/grafana-oss:latest',
+    image => 'grafana/grafana:latest',
     args  => [
       '--user root',
       "--ip ${container_ip}",
