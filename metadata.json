@@ -1,6 +1,6 @@
 {
   "name": "halyard-grafana",
-  "version": "0.0.58",
+  "version": "0.0.59",
   "author": "Les Aker",
   "license": "MIT",
   "summary": "Configure grafana instance",
