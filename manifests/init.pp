@@ -11,6 +11,7 @@
 # @param aws_access_key_id sets the AWS key to use for Route53 challenge
 # @param aws_secret_access_key sets the AWS secret key to use for the Route53 challenge
 # @param email sets the contact address for the certificate
+# @param version sets the Docker image version to run
 # @param root_domain sets the publicly visible root domain for the site
 # @param root_url sets the publicly visible root URL for the site
 # @param container_ip sets the address of the Docker container
@@ -44,6 +45,7 @@ class grafana (
   String $aws_access_key_id,
   String $aws_secret_access_key,
   String $email,
+  String $version = 'latest',
   Optional[String] $root_domain = undef,
   Optional[String] $root_url = undef,
   String $container_ip = '172.17.0.2',
@@ -105,7 +107,7 @@ cp \$LEGO_HOOK_CERT_KEY_PATH ${datadir}/certs/key
   }
 
   -> docker::container { 'grafana':
-    image => 'grafana/grafana:latest',
+    image => "grafana/grafana:${version}",
     args  => [
       '--user root',
       "--ip ${container_ip}",
